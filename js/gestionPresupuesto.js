@@ -25,45 +25,45 @@ function mostrarPresupuesto() {
 }
 
 function CrearGasto(descripcion, valor, fecha, etiquetas = []) {
-    if (valor <= 0){
-        valor = 0
-    }
-
-    if (Date.parse(fecha)){
+    this.descripcion = descripcion;
+    if (typeof valor !== 'number' || valor < 0){
+        valor = 0;
+    } 
+    this.valor = valor;
+    
+    if (Date.parse(fecha)) {
         fecha = Date.parse(fecha);
     }
-    else{
+    else {
         fecha = Date.now();
     }
-    let gasto = {
-        descripcion: descripcion,
-        valor: valor,
-        fecha: fecha,
-        etiquetas: etiquetas,
-
-        mostrarGasto: function() {
+    this.fecha = fecha;
+    this.etiquetas = etiquetas;
+    
+        this.mostrarGasto = function() {
             return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
             
-        },
-        actualizarDescripcion: function(nuevaDescripcion){
+        }
+        this.actualizarDescripcion = function(nuevaDescripcion){
             this.descripcion = nuevaDescripcion;
         
-        },
-        actualizarValor: function(nuevoValor){
-            if (nuevoValor >= 0){
+        }
+        this.actualizarValor = function(nuevoValor){
+            if (nuevoValor > 0){
                 this.valor = nuevoValor;
             }
             else{
                 console.error("El valor introducido no es valido.");
                 return -1;
             }
-        },
-        anyadirEtiquetas: function() {
+        }
+        this.anyadirEtiquetas = function() {
 
         }
+    
+    
+    
     }
-
-}
 
 function anyadirGasto(gasto){
     gastos.id = idGasto;
