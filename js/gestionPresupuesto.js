@@ -109,12 +109,17 @@ function listarGastos(){
 function borrarGasto(id){
     gastos.splice(id);
 }
+function calcularTotalGastos(){
+    let TotalGastos
+    for (let i = 0; i < gastos.length; i++ ) {
+        TotalGastos = TotalGastos + gastos[i].valor
+    }
+}
+
 function calcularBalance(){
 
 }
-function calcularTotalGastos(){
 
-}
 
 
 
