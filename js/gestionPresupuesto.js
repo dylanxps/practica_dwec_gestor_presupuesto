@@ -40,25 +40,55 @@ function CrearGasto(descripcion, valor, fecha, etiquetas = []) {
     this.fecha = fecha;
     this.etiquetas = etiquetas;
     
-        this.mostrarGasto = function() {
-            return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+    this.mostrarGasto = function() {
+        return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " €";
+            
+    }
+
+    this.actualizarDescripcion = function(nuevaDescripcion){
+        this.descripcion = nuevaDescripcion;
+        
+    }
+
+    this.actualizarValor = function(nuevoValor){
+        if (nuevoValor > 0) {
+            this.valor = nuevoValor;
+            }
+        else {
+            console.error("El valor introducido no es valido.");
+            return -1;
+            }
+        }
+
+        this.motrarGastoCompleto = function() {
+            return "Gasto correspondiente a " + this.descripcion + " con valor " + this.valor + " € \n" +  "Fecha: " + fecha.toLocaleString() + "\n" + etiquetas.gasto;
+        }
+
+        this.actualizarFecha = function(fechaNuevo) {
+            if (Date.parse(fechaNuevo)) {
+                fecha = Date.parse(fechaNuevo);
+            } 
             
         }
-        this.actualizarDescripcion = function(nuevaDescripcion){
-            this.descripcion = nuevaDescripcion;
-        
-        }
-        this.actualizarValor = function(nuevoValor){
-            if (nuevoValor > 0){
-                this.valor = nuevoValor;
-            }
-            else{
-                console.error("El valor introducido no es valido.");
-                return -1;
-            }
-        }
-        this.anyadirEtiquetas = function() {
 
+        this.anyadirEtiquetas = function(...etiquetasNuevas) {
+            for (let i = 0; i < etiquetasNuevas.length; i++ ) {
+                if (!etiquetas.includes(etiquetasNuevas[i])){
+                    etiquetas.push(etiquetasNuevas[i]);
+                        
+                     
+                }
+            }
+        }
+
+        this.borrarEtiquetas = function(...etiquetasBorrado) {
+            for (let i = 0; i < etiquetasBorrado.length; i++ ) {
+                if (etiquetas.includes(etiquetasBorrado[i])) {
+                    etiquetas.splice(etiquetasNuevas[i]);
+                        
+                     
+                }
+            }
         }
     
     
@@ -66,7 +96,7 @@ function CrearGasto(descripcion, valor, fecha, etiquetas = []) {
     }
 
 function anyadirGasto(gasto){
-    gastos.id = idGasto;
+    gasto.id = idGasto;
 
     idGasto++;
 
@@ -76,8 +106,8 @@ function listarGastos(){
     return gastos;
 }
 
-function borrarGasto(gasto){
-    gastos.pop(gasto.id)
+function borrarGasto(id){
+    gastos.splice(id);
 }
 function calcularBalance(){
 
