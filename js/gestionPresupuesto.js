@@ -101,16 +101,18 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
         }
         this.obtenerPeriodoAgrupacion = function(periodo) {
+
+            const fecha = new Date(this.fecha).toISOString();
             if (periodo === "mes") {
-                return this.fecha.slice(0, 7)
+                return fecha.slice(0, 7)
             }
 
             if (periodo === "dia") {
-                return this.fecha;
+                return fecha(0, 10);
             }
 
             if (periodo === "año") {
-                return this.fecha.slice(0, 4)
+                return fecha.slice(0, 4)
             }
         }
     
@@ -156,12 +158,54 @@ function filtrarGastos(filtros) {
         if (filtros.fechaDesde) {
 
             const fechaDesde = Date.parse(filtros.fechaDesde);
-            const fechaGasto = Date.parse(gasto.fecha);
+            const fechaGasto = gasto.fecha;
             if (fechaDesde > fechaGasto) {
                 encontrados = false;
             }
         }
+        if (filtros.fechaHasta && encontrados) {
 
+            const fechaHasta = Date.parse(filtros.fechaHasta);
+            const fechaGasto = gasto.fecha;
+            if (fechaHasta < fechaGasto) {
+                encontrados = false;
+            }
+
+        }
+        if (filtros.valorMinimo && encontrados) {
+            const valorMinimo = filtros.valorMinimo;
+            const valorActual = gasto.valor;
+            if (valorMinimo > valorActual) {
+                encontrados = false;
+            }
+        }
+        if (filtros.valorMaximo && encontrados) {
+            const valorMaximo = filtros.valorMaximo;
+            const valorActual = gasto.valor;
+
+            if (valorMaximo < valorActual) {
+                encontrados = false;
+            }
+        }
+        if (filtros.descripcionContiene && encontrados) {
+            const descripcionContiene = filtros.descripcionContiene.toLowerCase();
+            const descripcionGasto = gasto.descripcion.toLowerCase();
+
+            if (!descripcionGasto.includes(descripcionContiene)) {
+                encontrados = false;
+            }
+
+        }
+        if (filtros.etiquetasTiene && encontrados) {
+            const etiquetasPresentes = gasto.etiquetas.map(e => e.toLowerCase());
+            const etiquetasTiene = filtros.etiquetasTiene.map(e => e.toLowerCase());
+
+            const coincidencia = etiquetasTiene.some(etiqueta => etiquetasPresentes.includes(etiqueta));
+
+            if (!coincidencia) {
+                encontrados = false;
+            }
+        }
 
         
         return encontrados;
@@ -172,7 +216,10 @@ function filtrarGastos(filtros) {
     
 
 function agruparGastos() {
+    return gastos.reduce(function (gasto){
 
+        
+    })
 }
 
 
