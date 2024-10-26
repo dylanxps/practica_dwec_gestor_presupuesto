@@ -100,6 +100,19 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
                 }
             }
         }
+        this.obtenerPeriodoAgrupacion = function(periodo) {
+            if (periodo === "mes") {
+                return this.fecha.slice(0, 7)
+            }
+
+            if (periodo === "dia") {
+                return this.fecha;
+            }
+
+            if (periodo === "año") {
+                return this.fecha.slice(0, 4)
+            }
+        }
     
     
     
@@ -136,6 +149,31 @@ function calcularBalance() {
     
 }
 
+function filtrarGastos(filtros) {
+    return gastos.filter(function (gasto) {
+        let encontrados = true
+
+        if (filtros.fechaDesde) {
+
+            const fechaDesde = Date.parse(filtros.fechaDesde);
+            const fechaGasto = Date.parse(gasto.fecha);
+            if (fechaDesde > fechaGasto) {
+                encontrados = false;
+            }
+        }
+
+
+        
+        return encontrados;
+    })
+}   
+            
+        
+    
+
+function agruparGastos() {
+
+}
 
 
 
@@ -151,5 +189,7 @@ export   {
     anyadirGasto,
     borrarGasto,
     calcularTotalGastos,
-    calcularBalance
+    calcularBalance,
+    filtrarGastos,
+    agruparGastos
 }
