@@ -215,11 +215,13 @@ function filtrarGastos(filtros) {
         
     
 
-function agruparGastos() {
-    return gastos.reduce(function (gasto){
+function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
+    let propfilter = {fechaDesde: fechaDesde, fechaHasta: fechaHasta, etiquetasTiene:etiquetas};
+    
+    let gastosfiltrado = filtrarGastos(propfilter);
 
-        
-    })
+
+    
 }
 
 
