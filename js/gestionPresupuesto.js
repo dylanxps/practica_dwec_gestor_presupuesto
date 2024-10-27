@@ -108,10 +108,10 @@ function CrearGasto(descripcion, valor, fecha, ...etiquetas) {
             }
 
             if (periodo === "dia") {
-                return fecha(0, 10);
+                return fecha.slice(0, 10);
             }
 
-            if (periodo === "año") {
+            if (periodo === "anyo") {
                 return fecha.slice(0, 4)
             }
         }
@@ -220,6 +220,16 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
     let gastosfiltrado = filtrarGastos(propfilter);
 
+    return gastosfiltrado.reduce(function(acc, gasto){
+        
+        let periodoCorregido = gasto.obtenerPeriodoAgrupacion(periodo);
+
+        acc[periodoCorregido] = acc[periodoCorregido] || 0;
+
+        acc[periodoCorregido] += gasto.valor;
+
+        return acc;
+    }, {})
 
     
 }
