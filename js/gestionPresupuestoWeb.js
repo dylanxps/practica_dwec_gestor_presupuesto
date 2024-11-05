@@ -95,14 +95,54 @@ function repintar() {
 
 function actualizarPresupuestoWeb() {
   let presupuestoNuevo = prompt("Introduce el presupuesto nuevo:");
-
+  
   presupuestoNuevo = parseFloat(presupuestoNuevo);
   gestionPresupuesto.actualizarPresupuesto(presupuestoNuevo);
   repintar();
 
+
 }
 
+function nuevoGastoWeb() {
+    let descripcion = prompt("Descripcion del gasto:");
+    let valor = prompt("Valor del gasto en Euros:");
+    let fecha = prompt("Fecha del gasto ( yyyy-mm-dd ):");
+    let etiquetas = prompt("Etiquetas de gasto:");
 
+    valor = parseFloat(valor);
+    let arrEtiquetas = etiquetas.split(',');
+
+    let gastoNuevo = gestionPresupuesto.CrearGasto(descripcion, valor, fecha, ...arrEtiquetas);
+    gestionPresupuesto.anyadirGasto(gastoNuevo);
+
+    repintar();
+
+}
+
+function EditarHandle(gasto) {
+    this.gasto = gasto;
+}
+
+EditarHandle.prototype.handleEvent = function() {
+    let descripcion = prompt("nuevo Descripcion del gasto:", this.gasto.descripcion);
+    let valor = prompt("nuevo Valor del gasto en Euros:", this.gasto.valor);
+    let fecha = prompt("nuevo Fecha del gasto ( yyyy-mm-dd ):", this.gasto.fecha);
+    let etiquetas = prompt("nuevo Etiquetas de gasto:", this.gasto.etiquetas);
+
+    valor = parseFloat(valor);
+    let arrEtiquetas = etiquetas.split(',');
+
+    this.gasto.actualizarDescripcion
+    this.gasto.actualizarValor(valor)
+    
+    }
+
+
+let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
+botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
+
+let botonAnyadirGasto = document.getElementById('anyadirgasto');
+botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 
 
 export {
@@ -110,5 +150,6 @@ export {
     mostrarGastoWeb,
     mostrarGastosAgrupadosWeb,
     repintar,
-    actualizarPresupuestoWeb
+    actualizarPresupuestoWeb,
+    nuevoGastoWeb
 }
