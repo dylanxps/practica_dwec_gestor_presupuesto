@@ -5,7 +5,7 @@ gestionPresupuesto.actualizarPresupuesto(1500);
 let mensajePresupuesto = gestionPresupuesto.mostrarPresupuesto();
 gestionPresupuestoWeb.mostrarDatoEnId(mensajePresupuesto, 'presupuesto');
 
-const gastos = [
+let gastos = [
     new gestionPresupuesto.CrearGasto("Compra carne", 23.44, "2021-10-06", "casa", "comida"),
     new gestionPresupuesto.CrearGasto("Compra fruta y verdura", 14.25, "2021-09-06", "supermercado", "comida"),
     new gestionPresupuesto.CrearGasto("Bonobús", 18.60, "2020-05-26", "transporte"),
@@ -26,7 +26,7 @@ let listaGastos = gestionPresupuesto.listarGastos();
 listaGastos.forEach(gasto => {gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-completo', gasto);
 
 });
-let filtrosSep21 = {
+const filtrosSep21 = {
     fechaDesde: '2021-09-01',
     fechaHasta: '2021-09-30'
 }
@@ -35,18 +35,19 @@ listaGastosSep21.forEach(gasto => { gestionPresupuestoWeb.mostrarGastoWeb('lista
 
 })
 
-let filtroMas50Eur = {
+const filtroMas50Eur = {
     valorMinimo: "50"
 }
-let listaGastosMas50Eur = gestionPresupuesto.filtrarGastos(filtroMas50Eur);
+const listaGastosMas50Eur = gestionPresupuesto.filtrarGastos(filtroMas50Eur);
 listaGastosMas50Eur.forEach(gasto => { gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-2', gasto);
 
 });
-let filtroMas200EurSeguros = {
+
+const filtroMas200EurSeguros = {
     valorMinimo: "200",
     etiquetas: 'seguros'
 }
-let listaGastosMas200EurSeguros = gestionPresupuesto.filtrarGastos(filtroMas200EurSeguros)
+const listaGastosMas200EurSeguros = gestionPresupuesto.filtrarGastos(filtroMas200EurSeguros)
 listaGastosMas200EurSeguros.forEach(gasto => { gestionPresupuestoWeb.mostrarGastoWeb('listado-gastos-filtrado-3', gasto);
 
 });
