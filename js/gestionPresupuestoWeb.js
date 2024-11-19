@@ -133,6 +133,62 @@ function repintar() {
         
     });
 
+      document.getElementById("listado-gastos-filtrado-1").innerHTML = '';
+      document.getElementById("listado-gastos-filtrado-2").innerHTML = '';
+      document.getElementById("listado-gastos-filtrado-3").innerHTML = '';
+      document.getElementById("listado-gastos-filtrado-4").innerHTML = '';
+      
+      const filtrosSep21 = {
+        fechaDesde: '2021-09-01',
+        fechaHasta: '2021-09-30'
+        }
+    let listaGastosSep21 = gestionPresupuesto.filtrarGastos(filtrosSep21);
+    listaGastosSep21.forEach(gasto => { mostrarGastoWeb('listado-gastos-filtrado-1', gasto);
+    
+    })
+    
+    const filtroMas50Eur = {
+        valorMinimo: "50"
+    }
+    const listaGastosMas50Eur = gestionPresupuesto.filtrarGastos(filtroMas50Eur);
+    listaGastosMas50Eur.forEach(gasto => { mostrarGastoWeb('listado-gastos-filtrado-2', gasto);
+    
+    });
+    
+    const filtroMas200EurSeguros = {
+        valorMinimo: "200",
+        etiquetas: 'seguros'
+    }
+    const listaGastosMas200EurSeguros = gestionPresupuesto.filtrarGastos(filtroMas200EurSeguros)
+    listaGastosMas200EurSeguros.forEach(gasto => { mostrarGastoWeb('listado-gastos-filtrado-3', gasto);
+    
+    });
+    
+    let filtroMenos50ComidaOTransporte = {
+        valorMaximo: "50",
+        etiquetas: ['comida', 'transporte']
+    
+    }
+    let listaMenos50ComidaOTransporte = gestionPresupuesto.filtrarGastos(filtroMenos50ComidaOTransporte)
+    listaMenos50ComidaOTransporte.forEach(gasto => {mostrarGastoWeb('listado-gastos-filtrado-4', gasto);
+    
+    });
+
+    document.getElementById("agrupacion-dia").innerHTML = '';
+    document.getElementById("agrupacion-mes").innerHTML = '';
+    document.getElementById("agrupacion-anyo").innerHTML = '';
+
+
+    let gastoDia = gestionPresupuesto.agruparGastos('dia');
+mostrarGastosAgrupadosWeb('agrupacion-dia', gastoDia, 'día');
+
+let gastoMes = gestionPresupuesto.agruparGastos('mes');
+mostrarGastosAgrupadosWeb('agrupacion-mes', gastoMes, 'mes');
+
+let gastoAnyo = gestionPresupuesto.agruparGastos('anyo');
+mostrarGastosAgrupadosWeb('agrupacion-anyo', gastoAnyo, 'año');
+
+
 
 }
 
@@ -184,6 +240,7 @@ function nuevoGastoWebFormulario() {
 
         
         document.getElementById('anyadirgasto-formulario').disabled = false;
+        formulario.remove();
     }
     formulario.addEventListener("submit", submitHandler);
 
@@ -229,7 +286,7 @@ EditarHandle.prototype.handleEvent = function() {
     this.gasto.actualizarFecha(fecha);
     this.gasto.anyadirEtiquetas(arrEtiquetas)
 
-        repintar();
+    repintar();
     
     
 }
