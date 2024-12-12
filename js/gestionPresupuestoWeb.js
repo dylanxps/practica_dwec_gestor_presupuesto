@@ -363,6 +363,39 @@ BorrarEtiquetasHandle.prototype.handleEvent = function() {
 
 }
 
+function filtrarGastosWeb(event) {
+    event.preventDefault();
+
+    let filtroDesc = document.getElementById("formulario-filtrado-descripcion").value;
+    let filtroValMin = document.getElementById("formulario-filtrado-valor-minimo").value;
+    let filtroValMax = document.getElementById("formulario-filtrado-valor-maximo").value;
+    let filtroFecIni = document.getElementById("formulario-filtrado-fecha-desde").value;
+    let filtroFecHas = document.getElementById("formulario-filtrado-fecha-hasta").value;
+    let filtroEti = document.getElementById("formulario-filtrado-etiquetas-tiene").value;
+
+    if (filtroEti) {
+        filtroEti = gestionPresupuesto.transformarListadoEtiquetas(filtroEti);
+    }
+
+    const filtro = {
+        descripcionContiene : filtroDesc,
+        valorMinimo : filtroValMin,
+        valorMaximo : filtroValMax,
+        fechaDesde : filtroFecIni,
+        fechaHasta : filtroFecHas,
+        etiquetasTiene : filtroEti
+    }
+        
+    
+
+    let filtrado = gestionPresupuesto.filtrarGastos(filtro);
+
+    mostrarGastoWeb('listado-gastos-compledo', filtrado);
+}
+
+let filtrar = document.getElementById('filtrar-gastos');
+filtrar.querySelector('formulario-filtrado').addEventListener('submit', filtrarGastosWeb );
+
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
 

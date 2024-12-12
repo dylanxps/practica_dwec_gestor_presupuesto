@@ -234,6 +234,10 @@ function agruparGastos(periodo, etiquetas, fechaDesde, fechaHasta) {
     
 }
 
+function transformarListadoEtiquetas(c) {
+    return c.split(/[\s,.:;]+/).map(etiqueta => etiqueta.trim());
+}
+
 
 
 
@@ -250,5 +254,6 @@ export   {
     calcularTotalGastos,
     calcularBalance,
     filtrarGastos,
-    agruparGastos
+    agruparGastos,
+    transformarListadoEtiquetas
 }
