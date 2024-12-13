@@ -378,23 +378,30 @@ function filtrarGastosWeb(event) {
     }
 
     const filtro = {
-        descripcionContiene : filtroDesc,
-        valorMinimo : filtroValMin,
-        valorMaximo : filtroValMax,
-        fechaDesde : filtroFecIni,
-        fechaHasta : filtroFecHas,
-        etiquetasTiene : filtroEti
+        descripcionContiene : filtroDesc || undefined,
+        valorMinimo : filtroValMin || undefined,
+        valorMaximo : filtroValMax || undefined,
+        fechaDesde : filtroFecIni || undefined,
+        fechaHasta : filtroFecHas || undefined,
+        etiquetasTiene : filtroEti || undefined
     }
         
     
 
     let filtrado = gestionPresupuesto.filtrarGastos(filtro);
 
-    mostrarGastoWeb('listado-gastos-compledo', filtrado);
+    document.getElementById("listado-gastos-completo").innerHTML = '';
+
+    filtrado.forEach(gasto => {mostrarGastoWeb('listado-gastos-completo', gasto)})
+
+
+
+    
+
 }
 
 let filtrar = document.getElementById('filtrar-gastos');
-filtrar.querySelector('formulario-filtrado').addEventListener('submit', filtrarGastosWeb );
+filtrar.querySelector("#formulario-filtrado").addEventListener("submit", filtrarGastosWeb );
 
 let botonActualizarPresupuesto = document.getElementById('actualizarpresupuesto');
 botonActualizarPresupuesto.addEventListener("click", actualizarPresupuestoWeb);
