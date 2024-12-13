@@ -238,6 +238,20 @@ function transformarListadoEtiquetas(c) {
     return c.split(/[\s,.:;]+/).map(etiqueta => etiqueta.trim());
 }
 
+function cargarGastos(gastosA) {
+
+    gastos = [];
+
+    for (let gasto of gastosA) {
+        let gastoRehydrated = new CrearGasto();
+
+        Object.assign(gastoRehydrated, gasto);
+
+        gastos.push(gastoRehydrated);
+    }
+
+}
+
 
 
 
@@ -255,5 +269,6 @@ export   {
     calcularBalance,
     filtrarGastos,
     agruparGastos,
-    transformarListadoEtiquetas
+    transformarListadoEtiquetas,
+    cargarGastos
 }

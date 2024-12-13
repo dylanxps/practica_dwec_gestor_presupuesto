@@ -394,11 +394,32 @@ function filtrarGastosWeb(event) {
 
     filtrado.forEach(gasto => {mostrarGastoWeb('listado-gastos-completo', gasto)})
 
-
-
-    
-
 }
+
+function guardarGastosWeb() {
+    const listaGastos = gestionPresupuesto.listarGastos();
+
+    const gastosString = JSON.stringify(listaGastos);
+
+    localStorage.setItem("GestorGastosDWEC", gastosString);
+}
+
+function cargarGastosWeb() {
+
+    let listaGastosStorage = localStorage.getItem('GestorGastosDWEC') || "[]";
+
+    let listadoGastosString = JSON.parse(listaGastosStorage);
+
+    gestionPresupuesto.cargarGastos(listadoGastosString);
+    
+    repintar();
+}
+
+let botonCargarGastos = document.getElementById('cargar-gastos');
+botonCargarGastos.addEventListener("click", cargarGastosWeb);
+
+let botonGuardarGastos = document.getElementById('guardar-gastos');
+botonGuardarGastos.addEventListener("click", guardarGastosWeb);
 
 let filtrar = document.getElementById('filtrar-gastos');
 filtrar.querySelector("#formulario-filtrado").addEventListener("submit", filtrarGastosWeb );
@@ -419,5 +440,7 @@ export {
     mostrarGastosAgrupadosWeb,
     repintar,
     actualizarPresupuestoWeb,
-    nuevoGastoWeb
+    nuevoGastoWeb,
+    guardarGastosWeb,
+    cargarGastosWeb
 }
