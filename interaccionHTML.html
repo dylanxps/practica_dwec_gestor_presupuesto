@@ -4,6 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="/css/estilos.css">
     <title>
       Gestor de Presupuesto - Dylan Herbert Betton
     </title>
@@ -27,6 +28,10 @@
         <button type="button" id="cargar-gastos">
           Cargar gastos
         </button>
+        <button type="button" id="cargar-gastos-api">
+          Cargar gastos (API)
+        </button>
+        <input type="text" id="nombre_usuario">
 
       </div>
       <h2>Totales</h2>
@@ -124,6 +129,7 @@
               </div>
               <button type="submit">Enviar</button>
               <button class="cancelar" type="button">Cancelar</button>
+              <button type="button" class="gasto-enviar-api">Enviar (API)</button>
           </form>
       </template>
 

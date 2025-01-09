@@ -62,6 +62,16 @@ function mostrarGastoWeb(idElemento, gasto) {
 
         botonEditarFormulario.addEventListener("click", editarFormManager);
 
+        // remove api button
+        let botonBorrarApi = document.createElement('button');
+        botonBorrarApi.type = 'button';
+        botonBorrarApi.className = 'gasto-borrar-api';
+        botonBorrarApi.textContent = "Borrar (API)";
+
+        let borrarApiManager = new BorrarGastoApi(gasto);
+
+        botonBorrarApi.addEventListener("click", )
+
 
 
         divGasto.appendChild(divGastoDesc);
@@ -363,6 +373,29 @@ BorrarEtiquetasHandle.prototype.handleEvent = function() {
 
 }
 
+function BorrarGastoApi(gasto) {
+    this.id = gasto.id;
+}
+
+BorrarGastoApi.prototype.handleEvent = function() {
+
+    let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+    let urlA = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}/${this.id}`;
+
+    fetch(urlA, {
+        method: 'DELETE'
+    })
+
+    if (response.ok) {
+        cargarGastosApi();
+    }
+
+    
+
+    
+}
+
 function filtrarGastosWeb(event) {
     event.preventDefault();
 
@@ -415,6 +448,32 @@ function cargarGastosWeb() {
     repintar();
 }
 
+async function cargarGastosApi() {
+
+    let nombreUsuario = document.getElementById('nombre_usuario').value;
+
+    let urlA = `https://suhhtqjccd.execute-api.eu-west-1.amazonaws.com/latest/${nombreUsuario}`;
+
+    let gastos = [];
+    let id = 0;
+
+    while(true) {
+        let url = `${urlA}/${id}`;
+        const response = await fetch(url);
+        
+        if (!response.ok) {
+            break;
+        }
+
+        const gasto = await response.json();
+        gastos.push(gasto);
+        id++
+    }
+
+    gestionPresupuesto.cargarGastos(gastos);
+    repintar()
+}
+
 let botonCargarGastos = document.getElementById('cargar-gastos');
 botonCargarGastos.addEventListener("click", cargarGastosWeb);
 
@@ -433,6 +492,9 @@ botonAnyadirGasto.addEventListener("click", nuevoGastoWeb);
 let botonAnyadirGastoForm = document.getElementById('anyadirgasto-formulario');
 botonAnyadirGastoForm.addEventListener("click", nuevoGastoWebFormulario);
 
+let botonCargarGastosApi = document.getElementById('cargar-gastos-api');
+botonCargarGastosApi.addEventListener("click", cargarGastosApi);
+
 
 export {
     mostrarDatoEnId,
@@ -442,5 +504,6 @@ export {
     actualizarPresupuestoWeb,
     nuevoGastoWeb,
     guardarGastosWeb,
-    cargarGastosWeb
+    cargarGastosWeb,
+    cargarGastosApi
 }
